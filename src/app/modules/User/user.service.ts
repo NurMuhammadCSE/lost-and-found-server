@@ -17,13 +17,38 @@ const createUser = async (data: any) => {
       },
     },
     include: {
-      profile: true, // Include the profile in the response
+      profile: true, 
     },
   });
 
   return userData;
 };
 
+const createUserApproachTwo = async (data: any) => {
+  const hashedPassword: string = await bcrypt.hash(data.password, 12);
+
+  const userData = {
+    name: data.user.name,
+    email: data.user.email,
+    password: hashedPassword,
+  };
+
+  const result = await prisma.$transaction(async (transactionClient) => {
+    await transactionClient.user.create({
+      data: userData,
+    });
+
+    const createdAdminData = await transactionClient.userProfile.create({
+      data: data.profile,
+    });
+
+    return createdAdminData;
+  });
+
+  return result;
+};
+
 export const userService = {
-  createUser, // Ensure this matches the function name
+  createUser,
+  createUserApproachTwo,
 };
