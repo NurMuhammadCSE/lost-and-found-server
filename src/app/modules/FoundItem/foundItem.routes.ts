@@ -11,4 +11,9 @@ router.post(
   FoundItemsController.createFoundItems
 );
 
+router.get(
+  "/",
+  FoundItemsController.getAllFoundItems
+);
+
 export const foundItemsRoutes = router;
