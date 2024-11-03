@@ -14,9 +14,9 @@ model User {
   password    String
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  foundItem   FoundItem[]
-  claim       Claim[]
-  UserProfile UserProfile?
+  foundItems  FoundItem[]  // Pluralized for clarity
+  claims      Claim[]      // Pluralized for clarity
+  profile     UserProfile? // Changed to 'profile' for clarity
 
   @@map("users")
 }
@@ -25,38 +25,38 @@ model FoundItemCategory {
   id        String      @id @default(uuid())
   name      String      @unique
   createdAt DateTime    @default(now())
-  updatedAt DateTime    @default(now())
-  foundItem FoundItem[]
+  updatedAt DateTime    @updatedAt
+  foundItems FoundItem[] // Pluralized for clarity
 
   @@map("foundItemCategories")
 }
 
 model FoundItem {
-  id            String   @id @default(uuid())
+  id            String           @id @default(uuid())
   userId        String
   categoryId    String
   foundItemName String
   description   String
   location      String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
 
-  user     User              @relation(fields: [userId], references: [id])
-  category FoundItemCategory @relation(fields: [categoryId], references: [id])
-  claim    Claim[]
+  user          User              @relation(fields: [userId], references: [id])
+  category      FoundItemCategory @relation(fields: [categoryId], references: [id])
+  claims        Claim[]           // Pluralized for clarity
 
   @@map("foundItems")
 }
 
 model Claim {
-  id                    String      @id @default(uuid())
+  id                    String       @id @default(uuid())
   userId                String
   foundItemId           String
-  status                ClaimStatus @default(PENDING)
+  status                ClaimStatus  @default(PENDING)
   distinguishedFeatures String
   lostDate              DateTime
-  createdAt             DateTime    @default(now())
-  updatedAt             DateTime    @updatedAt
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
 
   user      User      @relation(fields: [userId], references: [id])
   foundItem FoundItem @relation(fields: [foundItemId], references: [id])
@@ -72,7 +72,7 @@ model UserProfile {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id])
+  user      User @relation(fields: [userId], references: [id])
 
   @@map("userProfiles")
 }
