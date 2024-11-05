@@ -63,9 +63,26 @@ const getProfile = async (userId: string) => {
   return profile;
 };
 
+const updateProfile = async (userId: string, profileData: { bio?: string; age?: number }) => {
+  const updatedProfile = await prisma.userProfile.update({
+    where: { userId },
+    data: profileData,
+    include: {
+      user: true, // Include user data in the response
+    },
+  });
+
+  if (!updatedProfile) {
+    throw new Error("Profile not found or could not be updated");
+  }
+
+  return updatedProfile;
+};
+
 
 export const userService = {
   createUser,
   createUserApproachTwo,
-  getProfile
+  getProfile,
+  updateProfile
 };

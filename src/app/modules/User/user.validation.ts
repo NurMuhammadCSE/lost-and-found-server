@@ -22,6 +22,19 @@ const createUserSchema = z.object({
   }),
 });
 
+export const updateProfileSchema = z.object({
+  body: z.object({
+    bio: z.string().max(500, "Bio must be 500 characters or less").optional(),
+    age: z
+      .number()
+      .int()
+      .min(0, "Age must be a positive number")
+      .max(120, "Age must be less than or equal to 120")
+      .optional(),
+  }),
+});
+
 export const createUserValidation = {
   createUserSchema,
+  updateProfileSchema,
 };

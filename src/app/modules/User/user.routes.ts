@@ -13,5 +13,10 @@ router.post(
 
 router.get("/my-profile", userController.getProfile);
 
+router.put(
+  "/my-profile",
+  validateRequest(createUserValidation.updateProfileSchema),
+  userController.updateProfile
+);
 
 export const userRoutes = router;
