@@ -46,7 +46,28 @@ const getAllClaims = catchAsync(async (req, res) => {
   });
 });
 
+
+const updateClaimStatus = catchAsync(async (req, res) => {
+    const { claimId } = req.params;
+    const { status } = req.body;
+  
+    // Validate user authorization
+    const accessToken = req.headers.authorization;
+    jwtHelpers.verifyToken(accessToken as string, config.jwt.jwt_secret as Secret);
+  
+    const updatedClaim = await claimService.updateClaimStatus(claimId, status);
+  
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Claim updated successfully",
+      data: updatedClaim,
+    });
+  });
+  
+
 export const ClaimController = {
   createClaim,
   getAllClaims,
+  updateClaimStatus
 };

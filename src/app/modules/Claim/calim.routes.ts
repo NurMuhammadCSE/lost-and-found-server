@@ -13,4 +13,7 @@ router.post(
 
 router.get("/", ClaimController.getAllClaims);
 
+router.put("/:claimId", ClaimController.updateClaimStatus);
+
+
 export const claimRoutes = router;
