@@ -11,5 +11,6 @@ router.post(
   ClaimController.createClaim
 );
 
+router.get("/", ClaimController.getAllClaims);
 
 export const claimRoutes = router;

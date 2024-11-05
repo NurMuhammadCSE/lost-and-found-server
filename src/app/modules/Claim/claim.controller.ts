@@ -28,6 +28,25 @@ const createClaim = catchAsync(async (req, res) => {
   });
 });
 
+const getAllClaims = catchAsync(async (req, res) => {
+  const accessToken = req.headers.authorization;
+  const decoded = jwtHelpers.verifyToken(
+    accessToken as string,
+    config.jwt.jwt_secret as Secret
+  );
+  const userId = decoded.userId;
+
+  const result = await claimService.getAllClaims(userId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Claims retrieved successfully",
+    data: result,
+  });
+});
+
 export const ClaimController = {
   createClaim,
+  getAllClaims,
 };
