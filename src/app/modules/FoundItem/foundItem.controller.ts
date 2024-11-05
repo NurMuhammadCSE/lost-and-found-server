@@ -11,18 +11,15 @@ const createFoundItems = catchAsync(async (req, res) => {
   const accessToken = req.headers.authorization;
   // console.log(accessToken);
   const decoded = jwtHelpers.verifyToken(
-    accessToken,
+    accessToken as string,
     config.jwt.jwt_secret as Secret
-  ); // Adjust as necessary
+  );
   // console.log(decoded);
   const userId = decoded.userId; // Assuming your JWT payload contains userId
 
   // console.log(userId);
 
-  const result = await foundItemsService.createFoundItems(
-    req.body,
-    userId
-  );
+  const result = await foundItemsService.createFoundItems(req.body, userId);
 
   sendResponse(res, {
     success: true,
@@ -31,6 +28,8 @@ const createFoundItems = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+
 const getAllFoundItems = catchAsync(async (req, res) => {
   const filters = pick(req.query, ["searchTerm", "foundItemName"]);
   const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
@@ -45,7 +44,6 @@ const getAllFoundItems = catchAsync(async (req, res) => {
     data: result.data,
   });
 });
-
 
 export const FoundItemsController = {
   createFoundItems,

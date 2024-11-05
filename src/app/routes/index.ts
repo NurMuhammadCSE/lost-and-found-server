@@ -3,6 +3,7 @@ import { userRoutes } from "../modules/User/user.routes";
 import { authRoutes } from "../modules/Auth/auth.routes";
 import { foundItemCategoryRoutes } from "../modules/FoundItemCategory/foundItemCategory.routes";
 import { foundItemsRoutes } from "../modules/FoundItem/foundItem.routes";
+import { claimRoutes } from "../modules/Claim/calim.routes";
 
 const router = express.Router();
 
@@ -22,6 +23,10 @@ const moduleRoutes = [
   {
     path: "/found-items",
     route: foundItemsRoutes,
+  },
+  {
+    path: "/claims",
+    route: claimRoutes,
   },
 ];
 
