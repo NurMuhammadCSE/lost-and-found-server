@@ -48,7 +48,24 @@ const createUserApproachTwo = async (data: any) => {
   return result;
 };
 
+const getProfile = async (userId: string) => {
+  const profile = await prisma.userProfile.findUnique({
+    where: { userId },
+    include: {
+      user: true,
+    },
+  });
+
+  if (!profile) {
+    throw new Error("Profile not found");
+  }
+
+  return profile;
+};
+
+
 export const userService = {
   createUser,
   createUserApproachTwo,
+  getProfile
 };
